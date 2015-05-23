@@ -6,8 +6,13 @@ follows the basic outline that we have generally followed when
 producing 3-dimensional games such as Splat! (geckogames/splat)
 and Tetramino Escape (geckogames/escapethevoid).
 
-  This game engine is still in the works and we do not
-reccomend using it yet for any new games.
+  ggwge2D is still in the works and we do not recommend using
+it yet for any new games.
+
+  We develop ggwge2D on GNU/Linux and Windows 8 Systems,
+and we test the game using Firefox (and occasionally Chrome.)
+Therefore, the latest working version should always work well
+on Firefox and will probably work on Chrome.
 
   ggwge2D is licensed under the GNU General Public License,
 version 3.0, or, at your option, any later version.
