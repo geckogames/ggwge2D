@@ -27,10 +27,19 @@ that meets the following criteria:
     3. Changes are complete - There are no features that exist
         but can't be used as intended, due to a lack of other
         features which changes depend on.
-All changes (other than typo fixes) must be done in branches
-other than the master branch. Please make your own branch,
-with a name that is either describing what happens in that
-branch, or is your username.
+
+  All changes (other than quick doc fixes) must be done in
+branches other than the master branch. Please make your own
+branch, with a name that is either describing what happens in
+that branch, or is your username. Once you have tested your
+branch's code, you can then put in a pull request to put the
+code in the master branch.
+
+  Some branches of interest apart from master include:
+   - The branch for the biggest contributor to the project
+      (Currently htmlguy, with branch 'htmlguy')
+   - Branches for official geckogames members:
+      htmlguy's branch - 'htmlguy'
 
   ggwge2D is licensed under the GNU General Public License,
 version 3.0, or, at your option, any later version.
