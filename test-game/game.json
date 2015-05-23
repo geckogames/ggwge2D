@@ -8,5 +8,13 @@
             "test1",
             "test2",
             "test3"
+        ],
+    "audiodir": ".",
+    "audioext": ".ogg",
+    "audio":
+        [
+            "test1",
+            "test2",
+            "test3"
         ]
 }

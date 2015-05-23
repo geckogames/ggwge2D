@@ -21,6 +21,7 @@
 var gameprops
 var canvas = {}
 var images = {}
+var audio = {}
 
 /*
     canvas.draw_image:
@@ -71,19 +72,29 @@ var ggwge2d_initialize_canvas = function () {
 }
 
 /*
-    ggwge2d_preload_images:
-    Preload images specified in gameprops by iterating
-    through them. Calls callback when complete.
+    ggwge2d_preload_media:
+    Preload media (audio + images) specified in gameprops
+    by iterating through them. Calls callback when complete.
 */
-var ggwge2d_preload_images = function (n, callback) {
+var ggwge2d_preload_media = function (n, callback) {
+    var gpil = gameprops.images.length;
+    var gpal = gameprops.audio.length;
     /* If there are still images to preload: */
-    if (n < gameprops.images.length) {
+    if (n < gpil) {
         /* Load the image */
         images[gameprops.images[n]] = new Image()
         images[gameprops.images[n]].onload = function () { /* Make it re-call this function on load. */
             ggwge2d_preload_images (n + 1, callback)
         }
         images[gameprops.images[n]].src = gameprops.imagedir + "/" + gameprops.images[n] + gameprops.imageext /* Initialize loading. */
+    } else if (n - gpil < gpal) {
+        /* Load the audio */
+        audio[gameprops.audio[n - gpil]] = new Audio()
+        audio[gameprops.audio[n - gpil]].oncanplaythrough = function () { /* Make it re-call this function on load. */
+            ggwge2d_preload_media (n + 1, callback)
+        }
+        /* Initialize Loading */
+        audio[gameprops.audio[n - gpil]].src = gameprops.audiodir + "/" + gameprops.audio[n - gpil] + gameprops.audioext
     } else {
     /* If done, run the callback. */
         callback ()
@@ -104,10 +115,10 @@ window.onload = function () {
         ggwge2d_initialize_canvas()
 
         /*
-            Preload all the images, then run further
+            Preload all the media, then run further
             initialization when complete.
         */
-        ggwge2d_preload_images (0, function () {
+        ggwge2d_preload_media (0, function () {
 
             /* Continue here. */
 
