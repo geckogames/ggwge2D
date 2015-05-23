@@ -20,5 +20,17 @@ in order to make XMLHttpRequests work properly. This is not a
 bug in ggwge2d, it is an annoyance in web standards and/or
 individual browser standards.
 
+  The main branch is for the latest version of the project
+that meets the following criteria:
+    1. It has been tested
+    2. It works with no known errors or bugs
+    3. Changes are complete - There are no features that exist
+        but can't be used as intended, due to a lack of other
+        features which changes depend on.
+All changes (other than typo fixes) must be done in branches
+other than the master branch. Please make your own branch,
+with a name that is either describing what happens in that
+branch, or is your username.
+
   ggwge2D is licensed under the GNU General Public License,
 version 3.0, or, at your option, any later version.
