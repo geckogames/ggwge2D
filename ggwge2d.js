@@ -84,7 +84,7 @@ var ggwge2d_preload_media = function (n, callback) {
         /* Load the image */
         images[gameprops.images[n]] = new Image()
         images[gameprops.images[n]].onload = function () { /* Make it re-call this function on load. */
-            ggwge2d_preload_images (n + 1, callback)
+            ggwge2d_preload_media (n + 1, callback)
         }
         images[gameprops.images[n]].src = gameprops.imagedir + "/" + gameprops.images[n] + gameprops.imageext /* Initialize loading. */
     } else if (n - gpil < gpal) {
