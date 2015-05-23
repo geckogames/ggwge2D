@@ -27,6 +27,9 @@ that meets the following criteria:
     3. Changes are complete - There are no features that exist
         but can't be used as intended, due to a lack of other
         features which changes depend on.
+        Note: Code added during the initial basic development
+        of the engine doesn't count, because the engine is
+        at that point not ready for release yet.
 
   All changes (other than quick doc fixes) must be done in
 branches other than the master branch. Please make your own
