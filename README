@@ -1,0 +1,13 @@
+            GeckoGames Web Game Engine 2D (ggwge2D)
+---------------------------------------------------------------
+
+  Created to make web game development easier, this game engine
+follows the basic outline that we have generally followed when
+producing 3-dimensional games such as Splat! (geckogames/splat)
+and Tetramino Escape (geckogames/escapethevoid).
+
+  This game engine is still in the works and we do not reccomend
+using it yet for any new games.
+
+  ggwge2D is licensed under the GNU General Public License,
+version 3.0, or, at your option, any later version.
