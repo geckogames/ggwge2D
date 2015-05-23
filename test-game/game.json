@@ -1,13 +1,13 @@
 {
-    "name": "Test Game",
+    "name": "suByzarC",
     "canvas": "#cvas",
     "imagedir": ".",
     "imageext": ".png",
     "images":
         [
-            "test1",
-            "test2",
-            "test3"
+            "mainbg",
+            "version",
+            "keytest"
         ],
     "audiodir": ".",
     "audioext": ".ogg",
