@@ -1,6 +1,7 @@
 {
     "name": "suByzarC",
     "canvas": "#cvas",
+    "fps": 40,
     "imagedir": ".",
     "imageext": ".png",
     "images":

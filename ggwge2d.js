@@ -22,6 +22,9 @@ var gameprops
 var canvas = {}
 var images = {}
 var audio = {}
+var gamedata = {
+    screen: 0
+}
 
 /*
     canvas.draw_image:
@@ -101,6 +104,17 @@ var ggwge2d_preload_media = function (n, callback) {
     }
 }
 
+/*
+    ggwge2d_update_game:
+    This is the main game loop.
+*/
+var ggwge2d_update_game = function () {
+    /* Clear the canvas. */
+    canvas.context.clearRect(0, 0, canvas.w, canvas.h)
+
+
+}
+
 window.onload = function () {
     /*
         Load the game props file (game.json) into gameprops
@@ -119,9 +133,8 @@ window.onload = function () {
             initialization when complete.
         */
         ggwge2d_preload_media (0, function () {
-
-            /* Continue here. */
-
+            /* Game loop */
+            setInterval (ggwge2d_update_game, 1000 / gameprops.fps)
         })
     })
 }
