@@ -20,6 +20,16 @@
 
 var gameprops
 var canvas = {}
+var images = {}
+
+/*
+    canvas.draw_image:
+    Draw an image on the screen, with x starting
+    from the bottom of the canvas instead of the top.
+*/
+canvas.draw_image = function (image, x, y) {
+    canvas.context.drawImage(images[image], x, canvas.h - y - images[image].height)
+}
 
 /*
     ggwhe2d_load_file:
@@ -60,6 +70,26 @@ var ggwge2d_initialize_canvas = function () {
     canvas.h = canvas.element.height
 }
 
+/*
+    ggwge2d_preload_images:
+    Preload images specified in gameprops by iterating
+    through them. Calls callback when complete.
+*/
+var ggwge2d_preload_images = function (n, callback) {
+    /* If there are still images to preload: */
+    if (n < gameprops.images.length) {
+        /* Load the image */
+        images[gameprops.images[n]] = new Image()
+        images[gameprops.images[n]].onload = function () { /* Make it re-call this function on load. */
+            ggwge2d_preload_images (n + 1, callback)
+        }
+        images[gameprops.images[n]].src = gameprops.imagedir + "/" + gameprops.images[n] + gameprops.imageext /* Initialize loading. */
+    } else {
+    /* If done, run the callback. */
+        callback ()
+    }
+}
+
 window.onload = function () {
     /*
         Load the game props file (game.json) into gameprops
@@ -72,5 +102,15 @@ window.onload = function () {
         
         /* Initialization Functions */
         ggwge2d_initialize_canvas()
+
+        /*
+            Preload all the images, then run further
+            initialization when complete.
+        */
+        ggwge2d_preload_images (0, function () {
+
+            /* Continue here. */
+
+        })
     })
 }

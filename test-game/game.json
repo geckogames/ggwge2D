@@ -1,4 +1,12 @@
 {
     "name": "Test Game",
-    "canvas": "#cvas"
+    "canvas": "#cvas",
+    "imagedir": ".",
+    "imageext": ".png",
+    "images":
+        [
+            "test1",
+            "test2",
+            "test3"
+        ]
 }
