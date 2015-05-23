@@ -14,5 +14,11 @@ and we test the game using Firefox (and occasionally Chrome.)
 Therefore, the latest working version should always work well
 on Firefox and will probably work on Chrome.
 
+  Please note that ggwge2d games need to be served from a web
+server instead of accessed from the browser through file:///,
+in order to make XMLHttpRequests work properly. This is not a
+bug in ggwge2d, it is an annoyance in web standards and/or
+individual browser standards.
+
   ggwge2D is licensed under the GNU General Public License,
 version 3.0, or, at your option, any later version.
