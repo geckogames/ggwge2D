@@ -1,5 +1,5 @@
 objects.titlescreen = function () {
     this.update = function () {
-        console.log("DRAWING")
+        canvas.draw_image("mainbg", gamedata.ticks % 2, gamedata.ticks % 2)
     }
 }
