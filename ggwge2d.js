@@ -28,7 +28,6 @@ var gamedata = {
 }
 var screen
 var objects = {}
-var keycodes = []
 var keys = {}
 var keypresses = {}
 
@@ -148,6 +147,10 @@ var ggwge2d_preload_scripts = function (n, callback) {
     }
 }
 
+/*
+    ggwge2d_object_indexof:
+    Get the named index of a value in an object.
+*/
 var ggwge2d_object_indexof = function (obj, content) {
     for (var x in obj)
         if (obj[x] === content)
@@ -180,25 +183,37 @@ var ggwge2d_update_game = function () {
 }
 
 window.onkeydown = function (e) {
-    keycodes[e.keyCode] = true
+    /* Check if this key is bound to something. */
     var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
     if (prop !== -1) {
+        /* If it is... */
+
+        /* If this isn't a repeat press, set the keypress. */
+        if (!keys[prop])
+            keypresses[prop] = true
+
+        /* Set the key. */
         keys[prop] = true
-        keypresses[prop] = true
+
+        /* Because this is bound, prevent the browser from reacting. */
+        e.preventDefault()
+        e.stopPropagation()
     }
-    e.preventDefault()
-    e.stopPropagation()
 }
 
 window.onkeyup = function (e) {
-    keycodes[e.keyCode] = false
+    /* Check if this key is bound to something. */
     var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
     if (prop !== -1) {
+        /* If it is... */
+
+        /* Set the key. */
         keys[prop] = false
-        keypresses[prop] = false
+
+        /* Because this is bound, prevent the browser from reacting. */
+        e.preventDefault()
+        e.stopPropagation()
     }
-    e.preventDefault()
-    e.stopPropagation()
 }
 
 window.onload = function () {
