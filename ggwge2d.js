@@ -169,6 +169,14 @@ var ggwge2d_object_indexof = function (obj, content) {
 }
 
 /*
+    ggwge2d_play_audio:
+    Play an audio clip.
+*/
+var ggwge2d_play_sfx = function (aud) {
+    audio[aud].play()
+}
+
+/*
     ggwge2d_update_game:
     This is the main game loop.
 */
