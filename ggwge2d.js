@@ -23,9 +23,10 @@ var canvas = {}
 var images = {}
 var audio = {}
 var gamedata = {
-    screen: 0
+    screen:0,
 }
 var screen
+var objects = {}
 
 /*
     canvas.draw_image:
@@ -38,6 +39,19 @@ canvas.draw_image = function (image, x, y) {
 
 var select_screen = function (screenid) {
     gamedata.screen = screenid
+    screen = {}
+    screen.layers = []
+    for (var i = 0; i < gameprops.screens[screenid].layers.length; i++) {
+        screen.layers[i] = []
+        for (var j = 0; j < gameprops.screens[screenid].layers[i].length; j++) {
+            screen.layers[i][j] = new objects[gameprops.screens[screenid].layers[i][j]]()
+        }
+    }
+    for (var prop in gameprops.screens[screenid])
+    {
+        if (prop !== "layers")
+            screen[prop] = gameprops.screens[screenid][prop]
+    }
 }
 
 /*
@@ -172,6 +186,9 @@ window.onload = function () {
                 initialization when complete.
             */
             ggwge2d_preload_scripts (0, function () {
+                /* Choose first screen. */
+                select_screen (0)
+
                 /* Game loop */
                 setInterval (ggwge2d_update_game, 1000 / gameprops.fps)
             })
