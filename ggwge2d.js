@@ -24,6 +24,7 @@ var images = {}
 var audio = {}
 var gamedata = {
     screen:0,
+    ticks: 0
 }
 var screen
 var objects = {}
@@ -152,6 +153,9 @@ var ggwge2d_preload_scripts = function (n, callback) {
 var ggwge2d_update_game = function () {
     /* Clear the canvas. */
     canvas.context.clearRect(0, 0, canvas.w, canvas.h)
+
+    /* Add 1 tick. */
+    gamedata.ticks++
 
     /* Loop through layers in screen. */
     for (var i = 0; i < screen.layers.length; i++) {
