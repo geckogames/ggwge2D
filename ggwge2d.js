@@ -22,6 +22,11 @@ var gameprops
 var canvas = {}
 var images = {}
 var audio = {}
+var gamedata = {
+    screen:0,
+}
+var screen
+var objects = {}
 
 /*
     canvas.draw_image:
@@ -30,6 +35,23 @@ var audio = {}
 */
 canvas.draw_image = function (image, x, y) {
     canvas.context.drawImage(images[image], x, canvas.h - y - images[image].height)
+}
+
+var select_screen = function (screenid) {
+    gamedata.screen = screenid
+    screen = {}
+    screen.layers = []
+    for (var i = 0; i < gameprops.screens[screenid].layers.length; i++) {
+        screen.layers[i] = []
+        for (var j = 0; j < gameprops.screens[screenid].layers[i].length; j++) {
+            screen.layers[i][j] = new objects[gameprops.screens[screenid].layers[i][j]]()
+        }
+    }
+    for (var prop in gameprops.screens[screenid])
+    {
+        if (prop !== "layers")
+            screen[prop] = gameprops.screens[screenid][prop]
+    }
 }
 
 /*
@@ -97,7 +119,47 @@ var ggwge2d_preload_media = function (n, callback) {
         audio[gameprops.audio[n - gpil]].src = gameprops.audiodir + "/" + gameprops.audio[n - gpil] + gameprops.audioext
     } else {
     /* If done, run the callback. */
-        callback ()
+        callback()
+    }
+}
+
+/*
+    ggwge2d_preload_scripts:
+    Preloads scripts specified in gameprops by
+    iterating through them. Calls callback when complete.
+*/
+var ggwge2d_preload_scripts = function (n, callback) {
+    /* If there are still scripts to preload: */
+    if (n < gameprops.scripts.length) {
+        /* Load a script */
+        var scr = document.createElement("script")
+        scr.onload = function () {
+            ggwge2d_preload_scripts (n + 1, callback)
+        }
+        scr.src = gameprops.scripts[n];
+        document.body.appendChild (scr)
+    } else {
+        /* If done, run callback. */
+        callback()
+    }
+}
+
+
+/*
+    ggwge2d_update_game:
+    This is the main game loop.
+*/
+var ggwge2d_update_game = function () {
+    /* Clear the canvas. */
+    canvas.context.clearRect(0, 0, canvas.w, canvas.h)
+
+    /* Loop through layers in screen. */
+    for (var i = 0; i < screen.layers.length; i++) {
+        /* Loop through objects in layer. */
+        for (var j = 0; j < screen.layers[i].length; j++) {
+            /* Update this screen. */
+            screen.layers[i][j].update()
+        }
     }
 }
 
@@ -119,9 +181,17 @@ window.onload = function () {
             initialization when complete.
         */
         ggwge2d_preload_media (0, function () {
+            /*
+                Preload all the scripts, then run firther
+                initialization when complete.
+            */
+            ggwge2d_preload_scripts (0, function () {
+                /* Choose first screen. */
+                select_screen (0)
 
-            /* Continue here. */
-
+                /* Game loop */
+                setInterval (ggwge2d_update_game, 1000 / gameprops.fps)
+            })
         })
     })
 }

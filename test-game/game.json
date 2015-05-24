@@ -1,13 +1,16 @@
 {
-    "name": "Test Game",
+    "name": "suByzarC",
     "canvas": "#cvas",
+    "fps": 40,
     "imagedir": ".",
     "imageext": ".png",
     "images":
         [
-            "test1",
-            "test2",
-            "test3"
+            "mainbg",
+            "version",
+            "keytest",
+            "bus1",
+            "bus2"
         ],
     "audiodir": ".",
     "audioext": ".ogg",
@@ -16,5 +19,21 @@
             "test1",
             "test2",
             "test3"
+        ],
+    "screens":
+        [
+            {
+                "name": "MainScreen",
+                "layers":
+                    [
+                        [
+                            "titlescreen"
+                        ]
+                    ]
+            }
+        ],
+    "scripts":
+        [
+            "objects.js"
         ]
 }
