@@ -47,6 +47,12 @@ code in the master branch.
   ggwge2D is licensed under the GNU General Public License,
 version 3.0, or, at your option, any later version.
 
+== Project Goals ==
+ - Easy to Use
+ - Very Small (one file)
+ - Very Quick
+ - Little-to-no Bugs
+
 == Current Features ==
  - Make games in less time, with less code (compared to custom / more complex engines)
  - Audio, Image, and Script preloading (waits for them before the game starts)
