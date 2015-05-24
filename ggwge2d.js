@@ -126,6 +126,7 @@ var ggwge2d_preload_media = function (n, callback) {
         /* Load the audio */
         audio[gameprops.audio[n - gpil]] = new Audio()
         audio[gameprops.audio[n - gpil]].oncanplaythrough = function () { /* Make it re-call this function on load. */
+            this.oncanplaythrough = null;
             ggwge2d_preload_media (n + 1, callback)
         }
         /* Initialize Loading */
@@ -169,12 +170,18 @@ var ggwge2d_object_indexof = function (obj, content) {
 }
 
 /*
+    play_sfx:
+    Play an audio clip.
+*/
+var play_sfx = function (aud) {
+    audio[aud].play()
+}
+
+/*
     ggwge2d_update_game:
-    This is the main game loop.
+    This is the main game loop's updating.
 */
 var ggwge2d_update_game = function () {
-    /* Clear the canvas. */
-    canvas.context.clearRect(0, 0, canvas.w, canvas.h)
 
     /* Add 1 tick. */
     gamedata.ticks++
@@ -192,37 +199,21 @@ var ggwge2d_update_game = function () {
     keypresses = {}
 }
 
-window.onkeydown = function (e) {
-    /* Check if this key is bound to something. */
-    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
-    if (prop !== -1) {
-        /* If it is... */
+/*
+    ggwge2d_draw_game:
+    This is the main game loop's drawing.
+*/
+var ggwge2d_draw_game = function () {
+    /* Clear the canvas. */
+    canvas.context.clearRect(0, 0, canvas.w, canvas.h)
 
-        /* If this isn't a repeat press, set the keypress. */
-        if (!keys[prop])
-            keypresses[prop] = true
-
-        /* Set the key. */
-        keys[prop] = true
-
-        /* Because this is bound, prevent the browser from reacting. */
-        e.preventDefault()
-        e.stopPropagation()
-    }
-}
-
-window.onkeyup = function (e) {
-    /* Check if this key is bound to something. */
-    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
-    if (prop !== -1) {
-        /* If it is... */
-
-        /* Set the key. */
-        keys[prop] = false
-
-        /* Because this is bound, prevent the browser from reacting. */
-        e.preventDefault()
-        e.stopPropagation()
+    /* Loop through layers in screen. */
+    for (var i = 0; i < screen.layers.length; i++) {
+        /* Loop through objects in layer. */
+        for (var j = 0; j < screen.layers[i].length; j++) {
+            /* Update this screen. */
+            screen.layers[i][j].draw()
+        }
     }
 }
 
@@ -249,11 +240,65 @@ window.onload = function () {
                 initialization when complete.
             */
             ggwge2d_preload_scripts (0, function () {
+
+                window.onkeydown = function (e) {
+                    /* Check if this key is bound to something. */
+                    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
+                    if (prop !== -1) {
+                        /* If it is... */
+
+                        /* If this isn't a repeat press, set the keypress. */
+                        if (!keys[prop])
+                            keypresses[prop] = true
+
+                            /* Set the key. */
+                            keys[prop] = true
+
+                            /* Because this is bound, prevent the browser from reacting. */
+                            e.preventDefault()
+                            e.stopPropagation()
+                    }
+                }
+
+                window.onkeyup = function (e) {
+                    /* Check if this key is bound to something. */
+                    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
+                    if (prop !== -1) {
+                        /* If it is... */
+
+                        /* Set the key. */
+                        keys[prop] = false
+
+                        /* Because this is bound, prevent the browser from reacting. */
+                        e.preventDefault()
+                        e.stopPropagation()
+                    }
+                }
+
                 /* Choose first screen. */
                 select_screen (0)
 
+                /*
+                    ggwge2d_run_game:
+                    This is the main game loop.
+                */
+                var ggwge2d_run_game = (function () {
+                    var loops = 0, skipms = 1000 / gameprops.fps, max_frame_skip = 10, next_game_tick = new Date().getTime()
+                    return function () {
+                        looped = 0
+                        while (new Date().getTime() > next_game_tick && loops < max_frame_skip) {
+                            ggwge2d_update_game()
+                            next_game_tick += skipms
+                            looped++
+                        }
+
+                        if (looped) ggwge2d_draw_game()
+                        requestAnimationFrame(ggwge2d_run_game)
+                    }
+                })()
+
                 /* Game loop */
-                setInterval (ggwge2d_update_game, 1000 / gameprops.fps)
+                ggwge2d_run_game()
             })
         })
     })
