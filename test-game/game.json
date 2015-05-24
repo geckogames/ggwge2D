@@ -1,7 +1,7 @@
 {
     "name": "suByzarC",
     "canvas": "#cvas",
-    "fps": 40,
+    "fps": 60,
     "keys":
         {
             "enter": 13,

@@ -179,11 +179,9 @@ var play_sfx = function (aud) {
 
 /*
     ggwge2d_update_game:
-    This is the main game loop.
+    This is the main game loop's updating.
 */
 var ggwge2d_update_game = function () {
-    /* Clear the canvas. */
-    canvas.context.clearRect(0, 0, canvas.w, canvas.h)
 
     /* Add 1 tick. */
     gamedata.ticks++
@@ -199,6 +197,24 @@ var ggwge2d_update_game = function () {
 
     /* Clear key-presses. */
     keypresses = {}
+}
+
+/*
+    ggwge2d_draw_game:
+    This is the main game loop's drawing.
+*/
+var ggwge2d_draw_game = function () {
+    /* Clear the canvas. */
+    canvas.context.clearRect(0, 0, canvas.w, canvas.h)
+
+    /* Loop through layers in screen. */
+    for (var i = 0; i < screen.layers.length; i++) {
+        /* Loop through objects in layer. */
+        for (var j = 0; j < screen.layers[i].length; j++) {
+            /* Update this screen. */
+            screen.layers[i][j].draw()
+        }
+    }
 }
 
 window.onload = function () {
@@ -262,8 +278,27 @@ window.onload = function () {
                 /* Choose first screen. */
                 select_screen (0)
 
+                /*
+                    ggwge2d_run_game:
+                    This is the main game loop.
+                */
+                var ggwge2d_run_game = (function () {
+                    var loops = 0, skipms = 1000 / gameprops.fps, max_frame_skip = 10, next_game_tick = new Date().getTime()
+                    return function () {
+                        looped = 0
+                        while (new Date().getTime() > next_game_tick && loops < max_frame_skip) {
+                            ggwge2d_update_game()
+                            next_game_tick += skipms
+                            looped++
+                        }
+
+                        if (looped) ggwge2d_draw_game()
+                        requestAnimationFrame(ggwge2d_run_game)
+                    }
+                })()
+
                 /* Game loop */
-                setInterval (ggwge2d_update_game, 1000 / gameprops.fps)
+                ggwge2d_run_game()
             })
         })
     })
