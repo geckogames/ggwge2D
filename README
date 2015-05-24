@@ -62,11 +62,11 @@ version 3.0, or, at your option, any later version.
  - Key Tracking System (Which keys are up/down)
  - Keypress Tracking System (Which keys have just been pressed)
  - Configuration file-based development (Less scripting, more adjusting values)
+ - FPS Correction (automatically fix after delays, avoid CPU burnout)
 
 == Planned Features ==
  - Audio System (Music + SFX)
  - Draw Flipped Images
  - Built-in gravity + friction logic
  - Built-in collision detection logic
- - FPS Correction (automatically fix after delays)
  - More to Come!
