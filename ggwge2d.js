@@ -28,7 +28,9 @@ var gamedata = {
 }
 var screen
 var objects = {}
-var keys = []
+var keycodes = []
+var keys = {}
+var keypresses = {}
 
 /*
     canvas.draw_image:
@@ -146,6 +148,12 @@ var ggwge2d_preload_scripts = function (n, callback) {
     }
 }
 
+var ggwge2d_object_indexof = function (obj, content) {
+    for (var x in obj)
+        if (obj[x] === content)
+            return x
+    return -1;
+}
 
 /*
     ggwge2d_update_game:
@@ -166,16 +174,29 @@ var ggwge2d_update_game = function () {
             screen.layers[i][j].update()
         }
     }
+
+    /* Clear key-presses. */
+    keypresses = {}
 }
 
 window.onkeydown = function (e) {
-    keys[e.keyCode] = true
+    keycodes[e.keyCode] = true
+    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
+    if (prop !== -1) {
+        keys[prop] = true
+        keypresses[prop] = true
+    }
     e.preventDefault()
     e.stopPropagation()
 }
 
 window.onkeyup = function (e) {
-    keys[e.keyCode] = false
+    keycodes[e.keyCode] = false
+    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
+    if (prop !== -1) {
+        keys[prop] = false
+        keypresses[prop] = false
+    }
     e.preventDefault()
     e.stopPropagation()
 }

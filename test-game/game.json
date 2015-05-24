@@ -2,6 +2,10 @@
     "name": "suByzarC",
     "canvas": "#cvas",
     "fps": 40,
+    "keys":
+        {
+            "enter": 13
+        },
     "imagedir": ".",
     "imageext": ".png",
     "images":
