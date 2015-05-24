@@ -19,5 +19,21 @@
             "test1",
             "test2",
             "test3"
+        ],
+    "screens":
+        [
+            {
+                "name": "MainScreen",
+                "layers":
+                    [
+                        [
+                            "titlescreen"
+                        ]
+                    ]
+            }
+        ],
+    "scripts":
+        [
+            "objects.js"
         ]
 }
