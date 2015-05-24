@@ -33,11 +33,20 @@ var keypresses = {}
 
 /*
     canvas.draw_image:
-    Draw an image on the screen, with x starting
+    Draw an image on the screen, with y starting
     from the bottom of the canvas instead of the top.
 */
 canvas.draw_image = function (image, x, y) {
     canvas.context.drawImage(images[image], x, canvas.h - y - images[image].height)
+}
+
+/*
+    canvas.draw_text:
+    Draw text on the screen, with y starting from
+    the bottom of the canvas instead of the top.
+*/
+canvas.draw_text = function (text, x, y) {
+    canvas.context.fillText(text, x, canvas.h - y)
 }
 
 var select_screen = function (screenid) {
@@ -94,6 +103,7 @@ var ggwge2d_initialize_canvas = function () {
     canvas.context = canvas.element.getContext("2d")
     canvas.w = canvas.element.width
     canvas.h = canvas.element.height
+    canvas.context.font = "18px monospace"
 }
 
 /*
