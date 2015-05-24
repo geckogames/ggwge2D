@@ -4,7 +4,8 @@
     "fps": 40,
     "keys":
         {
-            "enter": 13
+            "enter": 13,
+            "alt": 18
         },
     "imagedir": ".",
     "imageext": ".png",
@@ -32,6 +33,15 @@
                     [
                         [
                             "titlescreen"
+                        ]
+                    ]
+            },
+            {
+                "name": "randomscreen",
+                "layers":
+                    [
+                        [
+                            "randomscreen"
                         ]
                     ]
             }
