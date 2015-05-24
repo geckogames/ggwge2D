@@ -24,17 +24,29 @@ var images = {}
 var audio = {}
 var gamedata = {
     screen:0,
+    ticks: 0
 }
 var screen
 var objects = {}
+var keys = {}
+var keypresses = {}
 
 /*
     canvas.draw_image:
-    Draw an image on the screen, with x starting
+    Draw an image on the screen, with y starting
     from the bottom of the canvas instead of the top.
 */
 canvas.draw_image = function (image, x, y) {
     canvas.context.drawImage(images[image], x, canvas.h - y - images[image].height)
+}
+
+/*
+    canvas.draw_text:
+    Draw text on the screen, with y starting from
+    the bottom of the canvas instead of the top.
+*/
+canvas.draw_text = function (text, x, y) {
+    canvas.context.fillText(text, x, canvas.h - y)
 }
 
 var select_screen = function (screenid) {
@@ -91,6 +103,7 @@ var ggwge2d_initialize_canvas = function () {
     canvas.context = canvas.element.getContext("2d")
     canvas.w = canvas.element.width
     canvas.h = canvas.element.height
+    canvas.context.font = "18px monospace"
 }
 
 /*
@@ -144,6 +157,16 @@ var ggwge2d_preload_scripts = function (n, callback) {
     }
 }
 
+/*
+    ggwge2d_object_indexof:
+    Get the named index of a value in an object.
+*/
+var ggwge2d_object_indexof = function (obj, content) {
+    for (var x in obj)
+        if (obj[x] === content)
+            return x
+    return -1;
+}
 
 /*
     ggwge2d_update_game:
@@ -153,6 +176,9 @@ var ggwge2d_update_game = function () {
     /* Clear the canvas. */
     canvas.context.clearRect(0, 0, canvas.w, canvas.h)
 
+    /* Add 1 tick. */
+    gamedata.ticks++
+
     /* Loop through layers in screen. */
     for (var i = 0; i < screen.layers.length; i++) {
         /* Loop through objects in layer. */
@@ -160,6 +186,43 @@ var ggwge2d_update_game = function () {
             /* Update this screen. */
             screen.layers[i][j].update()
         }
+    }
+
+    /* Clear key-presses. */
+    keypresses = {}
+}
+
+window.onkeydown = function (e) {
+    /* Check if this key is bound to something. */
+    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
+    if (prop !== -1) {
+        /* If it is... */
+
+        /* If this isn't a repeat press, set the keypress. */
+        if (!keys[prop])
+            keypresses[prop] = true
+
+        /* Set the key. */
+        keys[prop] = true
+
+        /* Because this is bound, prevent the browser from reacting. */
+        e.preventDefault()
+        e.stopPropagation()
+    }
+}
+
+window.onkeyup = function (e) {
+    /* Check if this key is bound to something. */
+    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
+    if (prop !== -1) {
+        /* If it is... */
+
+        /* Set the key. */
+        keys[prop] = false
+
+        /* Because this is bound, prevent the browser from reacting. */
+        e.preventDefault()
+        e.stopPropagation()
     }
 }
 

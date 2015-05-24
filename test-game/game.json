@@ -2,6 +2,14 @@
     "name": "suByzarC",
     "canvas": "#cvas",
     "fps": 40,
+    "keys":
+        {
+            "enter": 13,
+            "alt": 18,
+            "left": 37,
+            "up": 38,
+            "right": 39
+        },
     "imagedir": ".",
     "imageext": ".png",
     "images":
@@ -10,7 +18,8 @@
             "version",
             "keytest",
             "bus1",
-            "bus2"
+            "bus2",
+            "busbg"
         ],
     "audiodir": ".",
     "audioext": ".ogg",
@@ -28,6 +37,25 @@
                     [
                         [
                             "titlescreen"
+                        ]
+                    ]
+            },
+            {
+                "name": "randomscreen",
+                "layers":
+                    [
+                        [
+                            "randomscreen"
+                        ]
+                    ]
+            },
+            {
+                "name": "gamescreen",
+                "layers":
+                    [
+                        [
+                            "busbg",
+                            "bus"
                         ]
                     ]
             }
