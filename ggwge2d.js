@@ -201,40 +201,6 @@ var ggwge2d_update_game = function () {
     keypresses = {}
 }
 
-window.onkeydown = function (e) {
-    /* Check if this key is bound to something. */
-    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
-    if (prop !== -1) {
-        /* If it is... */
-
-        /* If this isn't a repeat press, set the keypress. */
-        if (!keys[prop])
-            keypresses[prop] = true
-
-        /* Set the key. */
-        keys[prop] = true
-
-        /* Because this is bound, prevent the browser from reacting. */
-        e.preventDefault()
-        e.stopPropagation()
-    }
-}
-
-window.onkeyup = function (e) {
-    /* Check if this key is bound to something. */
-    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
-    if (prop !== -1) {
-        /* If it is... */
-
-        /* Set the key. */
-        keys[prop] = false
-
-        /* Because this is bound, prevent the browser from reacting. */
-        e.preventDefault()
-        e.stopPropagation()
-    }
-}
-
 window.onload = function () {
     /*
         Load the game props file (game.json) into gameprops
@@ -258,6 +224,41 @@ window.onload = function () {
                 initialization when complete.
             */
             ggwge2d_preload_scripts (0, function () {
+
+                window.onkeydown = function (e) {
+                    /* Check if this key is bound to something. */
+                    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
+                    if (prop !== -1) {
+                        /* If it is... */
+
+                        /* If this isn't a repeat press, set the keypress. */
+                        if (!keys[prop])
+                            keypresses[prop] = true
+
+                            /* Set the key. */
+                            keys[prop] = true
+
+                            /* Because this is bound, prevent the browser from reacting. */
+                            e.preventDefault()
+                            e.stopPropagation()
+                    }
+                }
+
+                window.onkeyup = function (e) {
+                    /* Check if this key is bound to something. */
+                    var prop = ggwge2d_object_indexof(gameprops.keys, e.keyCode)
+                    if (prop !== -1) {
+                        /* If it is... */
+
+                        /* Set the key. */
+                        keys[prop] = false
+
+                        /* Because this is bound, prevent the browser from reacting. */
+                        e.preventDefault()
+                        e.stopPropagation()
+                    }
+                }
+
                 /* Choose first screen. */
                 select_screen (0)
 
