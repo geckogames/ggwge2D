@@ -49,6 +49,9 @@ objects.bus = function () {
             this.y += this.speed
         else if (this.y !== 200)
             this.y -= this.speed
+        if (keys.honk)
+            play_sfx("horn")
+
         var v = this.x + this.y
         var seex = (this.x >= 0) ? this.x : 900 + this.x
         var seey = (this.y >= 0) ? this.y : 700 + this.y

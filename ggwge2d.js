@@ -126,6 +126,7 @@ var ggwge2d_preload_media = function (n, callback) {
         /* Load the audio */
         audio[gameprops.audio[n - gpil]] = new Audio()
         audio[gameprops.audio[n - gpil]].oncanplaythrough = function () { /* Make it re-call this function on load. */
+            this.oncanplaythrough = null;
             ggwge2d_preload_media (n + 1, callback)
         }
         /* Initialize Loading */
@@ -169,10 +170,10 @@ var ggwge2d_object_indexof = function (obj, content) {
 }
 
 /*
-    ggwge2d_play_audio:
+    play_sfx:
     Play an audio clip.
 */
-var ggwge2d_play_sfx = function (aud) {
+var play_sfx = function (aud) {
     audio[aud].play()
 }
 
