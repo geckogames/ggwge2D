@@ -28,6 +28,7 @@ var gamedata = {
 }
 var screen
 var objects = {}
+var keys = []
 
 /*
     canvas.draw_image:
@@ -165,6 +166,18 @@ var ggwge2d_update_game = function () {
             screen.layers[i][j].update()
         }
     }
+}
+
+window.onkeydown = function (e) {
+    keys[e.keyCode] = true
+    e.preventDefault()
+    e.stopPropagation()
+}
+
+window.onkeyup = function (e) {
+    keys[e.keyCode] = false
+    e.preventDefault()
+    e.stopPropagation()
 }
 
 window.onload = function () {
